@@ -1,10 +1,10 @@
 import { conn } from "@/lib/db.js";
 
 interface PatientQueryOptions {
-    sortBy: string;
-    sortOrder: string;
-    page: number;
-    pageSize: number;
+    sortBy?: string;
+    sortOrder?: string;
+    page?: number;
+    pageSize?: number;
 }
 
 export async function getPatients(options: PatientQueryOptions): Promise<any[]> {

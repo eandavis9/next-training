@@ -1,7 +1,14 @@
 'use client';
 import React, {useState, useEffect} from 'react';
+import { Metadata, NextPage } from 'next';
 
-const PatientList= ()=>{
+interface Props {}
+
+export const metadata: Metadata = {
+    title: 'Patients',
+};
+  
+const Patients: NextPage<Props> = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,7 +20,7 @@ const PatientList= ()=>{
           throw new Error('Failed to fetch data');
         }
         const json = await response.json();
-        setData(json);
+        setData(json?.data);
         setLoading(false);
     };
     getList();
@@ -31,4 +38,4 @@ const PatientList= ()=>{
     )
 }
 
-export default PatientList;
+export default Patients;
