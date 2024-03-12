@@ -13,7 +13,6 @@ export interface PatientCreationResponse {
     success: boolean;
     errorCode?: any;
     errors?: any; 
-    
 }
 
 @injectable()
@@ -34,7 +33,7 @@ export class PatientService implements IPatientService {
             return { errorCode: ERRORS.unexpectedError, success: false };
         }
     }
-    async createPatient(request: CreateRequest): Promise<PatientCreationResponse> {
+    async createPatient(request: CreateRequest): Promise<any> {
 
         try {
             const validatedRequest = CreateRequestSchema.parse(request);
@@ -51,7 +50,7 @@ export class PatientService implements IPatientService {
                 },
               });
 
-            return { success: !! result };
+            return { success: !! result, data: result };
         } catch (error: any) {
             // TODO: Add error codes
             console.log(error)
