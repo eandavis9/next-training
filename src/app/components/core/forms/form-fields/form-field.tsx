@@ -172,7 +172,7 @@ const FormField: React.FC<TextFieldProps> = ({
         className={textErrorVariants({ intent, fullWidth })}
         role='alert'
       >
-        <span hidden={intent !== 'error'} className='block text-sm sm:inline'>
+        <span hidden={intent !== 'error'} className='error-message block text-sm sm:inline'>
           {props.errorMessage}
         </span>
         <span

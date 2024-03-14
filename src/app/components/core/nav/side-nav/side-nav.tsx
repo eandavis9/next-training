@@ -6,7 +6,7 @@ import SideNavLogo from './side-nav-logo/side-nav-logo';
 import SideNavItem, { SideNavItemProps } from './side-nav-item/side-nav-item';
 
 const sideNavVariants = cva(
-  'absolute h-screen bg-secondary-white space-y-6 px-8 py-8 inset-y-0 left-0 sm:relative sm:-translate-x-0 transform -translate-x-full transition duration-200 ease-in-out',
+  'absolute h-screen custom-navbar-bg space-y-6 px-8 py-8 inset-y-0 left-0 sm:relative sm:-translate-x-0 transform -translate-x-full transition duration-200 ease-in-out',
   {
     variants: {
       collapsed: {

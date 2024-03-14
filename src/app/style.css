@@ -1,0 +1,58 @@
+.custom-navbar-bg {
+    background-color: rgb(30, 86, 150); /* Your custom color */
+}
+
+.pagination {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .pagination-item {
+    display: flex;
+  }
+  
+  .pagination-button {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .pagination-button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .pagination-button.active {
+    background-color:#ff02029c;
+    color: #fff;
+  }
+  
+  .pagination-button.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.add-button {
+    background-color: #ff02029c;
+}
+
+.error-message {
+  color: red;
+}
+
+.patientModal {
+  padding: 20px;
+  padding-top: 50px;
+}
+
+.save-btn {
+  background-color:#ff02029c;
+  color: white;
+}
+
+.modal-container {
+  width: 678px;
+}

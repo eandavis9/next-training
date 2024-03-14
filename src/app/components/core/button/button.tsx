@@ -8,6 +8,7 @@ const buttonVariants = cva('rounded-md flex justify-center items-center', {
       primary: 'bg-primary',
       secondary: 'border-primary border-solid border-2',
       link: '',
+      add: 'add-button',
     },
     size: {
       lg: 'px-5 py-3 gap-2',
@@ -39,6 +40,7 @@ const buttonLabelVariants = cva('font-semibold', {
       primary: 'text-secondary-50',
       secondary: 'text-primary',
       link: 'text-primary',
+      add: 'text-white'
     },
     size: {
       lg: 'text-base',
@@ -68,6 +70,7 @@ const buttonIconVariants = cva('', {
       primary: 'text-secondary-50',
       secondary: 'text-primary',
       link: 'text-primary',
+      add: 'text-white'
     },
     size: {
       lg: 'h-6 w-6',

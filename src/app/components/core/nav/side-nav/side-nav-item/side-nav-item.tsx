@@ -2,7 +2,7 @@ import { VariantProps, cva } from 'class-variance-authority';
 import React, { ReactNode } from 'react';
 
 const sideNavItemVariants = cva(
-  'inline-flex h-14 gap-4 rounded-md p-4 hover:bg-primary group',
+  'inline-flex h-14 gap-4 rounded-md p-4 hover:bg-primary group text-white',
   {
     variants: {
       collapsed: {
@@ -33,8 +33,8 @@ const sideNavItemLabelVariants = cva(
   {
     variants: {
       selected: {
-        true: 'text-secondary-white',
-        false: 'text-zinc-500',
+        true: 'text-zinc-500',
+        false: 'text-zinc-200',
       },
       leftIcon: {
         true: 'grow',
@@ -54,8 +54,8 @@ const sideNavItemiconVariants = cva(
   {
     variants: {
       selected: {
-        true: 'text-secondary-white',
-        false: 'text-secondary-300',
+        true: 'text-zinc-500',
+        false: 'text-zinc-200',
       },
     },
     defaultVariants: {

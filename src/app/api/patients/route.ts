@@ -20,7 +20,6 @@ export async function GET(request: NextRequest): Promise<any> {
     const options = { sortBy, sortOrder, page, pageSize };
 
     const result = await patientService.getPatients(options)
-
     return NextResponse.json(result);
 }
 

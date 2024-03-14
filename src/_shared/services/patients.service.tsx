@@ -3,9 +3,11 @@ import { prisma } from '@/_shared/lib/prisma'
 import { ERRORS } from "@/_shared/constants/errors/error-messages";
 import { PatientQueryOptions } from "../models/filters/patient-filter-model";
 import { CreateRequest } from "../models/patients/create-patient-model";
+import { PatientList } from "../models/patients/patient-list-model";
 import { CreateRequestSchema } from "@/_shared/constants/validations/schemas/patient-schema";
 import { z } from 'zod';
 import { injectable } from "inversify";
+import moment from 'moment'
 import "reflect-metadata";
 
 
@@ -20,16 +22,44 @@ export class PatientService implements IPatientService {
     async getPatients(request: PatientQueryOptions): Promise<any> {
         const { sortBy, sortOrder, page, pageSize } = request;
         const skip = (page - 1) * pageSize;
-        
+        const currentDate = moment();
         try {
+
+            const totalPatientsCount = await prisma.patient.count();
+
             const patients = await prisma.patient.findMany({
                 orderBy: { [sortBy]: sortOrder },
                 take: pageSize,
                 skip,
+                include: {
+                    // Include the patientDentistHistory relation with specific fields
+                    histories: {
+                        include: {
+                            dentist: true,
+                        },
+                    },
+                },
             });
-            return { success: true, data: patients };
-        } catch (error) {
 
+
+            // transform patients to PatientList
+            const list: PatientList[] = patients.map((patient) => {
+                // Extract the most recent visit and associated dentist information
+                const recentVisit = patient.histories[0];
+                const dentist = recentVisit ? recentVisit.dentist : null;
+    
+                return {
+                    ID: `P-${patient.id}`,
+                    patient_name: `${patient.first_name} ${patient.last_name}`,
+                    dentist_name: dentist ? `${dentist.first_name} ${dentist.last_name}` : '',
+                    last_visit: recentVisit ? moment(recentVisit.visit_date).format('YYYY-MM-DD') : '',
+                    last_service: recentVisit ? recentVisit.service_name : '',
+                    contact_number: patient.contact_number,
+                };
+            });
+            return { success: true, data: list, totalCount: totalPatientsCount };
+        } catch (error) {
+            console.log(error)
             return { errorCode: ERRORS.unexpectedError, success: false };
         }
     }

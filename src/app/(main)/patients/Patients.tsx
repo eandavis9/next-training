@@ -8,16 +8,20 @@ import TopNav from '@/app/components/core/nav/top-nav/top-nav';
 import Table from '@/app/components/core/table/table';
 import TextArea from '@/app/components/core/textarea/textarea';
 import TextField from '@/app/components/core/textfield/textfield';
-import PatientFormModal from '@/app/components/custom/patient/patient-form-modal';
+import  Pagination from '@/app/components/core/main/pagination'
+import Modal from '@/app/components/core/main/modal';
 import {
   BellIcon,
   Cog6ToothIcon,
   PencilSquareIcon,
-  Squares2X2Icon,
-  UserIcon,
+  TrashIcon,
+  UserPlusIcon,
+  PlusIcon
 } from '@heroicons/react/24/outline';
 import React, {useState, useEffect} from 'react';
 import { Metadata, NextPage } from 'next';
+import PatientFormModal from '@/app/components/custom/patient/patient-form-modal';
+import { ERRORS } from "@/_shared/constants/errors/error-messages";
 
 interface Props {}
 
@@ -26,11 +30,29 @@ export const metadata: Metadata = {
 };
   
 const Patients: NextPage<Props> = () => {
+  
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sortBy] = useState("created_at");
+  const [sortOrder] = useState("desc");
+  const [totalItems, setTotalItems] = useState(0);
+  const itemsPerPage = 5; // You can adjust this value according to your preference
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
+  const headers = ['ID', 'patient_name', 'dentist_name', 'last_visit', 'last_service', 'contact_number'];
+  const sortableColumns = ['ID', 'patient_name', 'last_visit', 'dentist_name', 'last_service', 'contact_number'];
+
+  const handlePageChange = async (pageNumber) => {
+    setCurrentPage(pageNumber);
+    await getList()
+    
+  };
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -40,7 +62,7 @@ const Patients: NextPage<Props> = () => {
     setIsModalOpen(false);
   };
 
- const handleSubmit = async (values, { setSubmitting }) => {
+ const handleSubmit = async (values) => {
     try {
       const response = await fetch('/api/patients', {
         method: 'POST',
@@ -49,94 +71,111 @@ const Patients: NextPage<Props> = () => {
         },
         body: JSON.stringify(values),
       });
-      if (!response.ok) {
-        throw new Error('Failed to submit patient data');
+
+      const jsonResponse = await response.json();
+      if (!jsonResponse.success && jsonResponse.errorCode === ERRORS.validationError) {
+        // handle validation errors
+        setValidationErrors(jsonResponse.errors);
+        console.log(jsonResponse.errors)
+      } else {
+        setData([jsonResponse.data, ...data]);
+        setIsModalOpen(false);
       }
-      const newData = await response.json();
-      // add to the array
-      setData([newData.data, ...data]);
-      setIsModalOpen(false);
+      
     } catch (error) {
-      console.error('Error submitting patient data:', error);
+        console.error('Error submitting patient data:', error);
+        throw new Error('Failed to submit patient data');
+    }
+  };
+
+  const getList = async () => {
+    try {
+      setLoading(true);
+      const params = new URLSearchParams({
+        sortBy,
+        sortOrder,
+        page: currentPage,
+        pageSize: itemsPerPage,
+      });
+      const url = `/api/patients?${params.toString()}`;
+  
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+      const json = await response.json();
+      setData(json?.data);
+      setTotalItems(json?.totalCount);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching patient data:', error);
       // Handle error
-    } finally {
-      setSubmitting(false);
     }
   };
 
    useEffect(()=>{
-    const getList = async()=>{
-        const response = await fetch(`/api/patients`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        const json = await response.json();
-        setData(json?.data);
-        setLoading(false);
-    };
     getList();
    }, []);
    /* make this a table component */
     return(
-      <div className='min-height-screen relative flex'>
-        <SideNav
-        items={[
-          {
-            label: 'Dashboard',
-            children: <Squares2X2Icon></Squares2X2Icon>,
-            selected: true,
-          },
-          {
-            label: 'Patients',
-            children: <UserIcon></UserIcon>,
-          },
-          {
-            label: 'Calendar',
-            children: <Cog6ToothIcon></Cog6ToothIcon>,
-          },
-          {
-            label: 'Dentists',
-            children: <UserIcon></UserIcon>,
-          },
-          {
-            label: 'Staff',
-            children: <UserIcon></UserIcon>,
-          },
-          {
-            label: 'Settings',
-            children: <Cog6ToothIcon></Cog6ToothIcon>,
-          },
-        ]}
-        logoPath={'images/img-logo-colored.svg'}
-      />
-
-        <Button
-          fullWidth
-          buttontype='button'
-          intent='primary'
-          label='Add Patient'
-          size='lg'
-          onClick={handleOpenModal}
-        ></Button>
-
-        {isModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={handleCloseModal}>&times;</span>
-            <h2>Add Patient</h2>
-            <PatientFormModal onClose={handleCloseModal} onSubmit={handleSubmit} />
+      <div className='flex h-[calc(100vh-70px)] w-screen flex-col gap-11 overflow-y-auto bg-secondary-50 p-6 sm:w-full'>
+        <div className='flex justify-between items-center gap-4'>
+          <div className='flex items-center'>
+            <UserPlusIcon className='h-6 w-6 mr-2' />
+            <h1 className='text-xl font-semibold'>Patients</h1>
           </div>
+          <Button
+            buttontype='button'
+            intent='add'
+            label='Add Patient'
+            leftIcon
+            size='md'
+            onClick={handleOpenModal}
+          >
+            <PlusIcon />
+          </Button>
         </div>
-        )}
-         
-        <h1>List of Items</h1> 
-        <ul>
-          {data.map(item => (
-            <li key={item.id}>{item.first_name}</li>
-          ))}
-        </ul>
+        
+      {/* filter fields */}
+      {isModalOpen && (
+       <Modal onClose={handleCloseModal} title="Add Patient" >
+         <PatientFormModal onSubmit={handleSubmit} apiErrors={validationErrors} />
+       </Modal>
+      )}
+      <div className="flex flex-col gap-y-4 rounded-lg border border-stroke bg-white p-3 shadow-default dark:border-strokedark dark:bg-boxdark sm:flex-row sm:items-center sm:justify-between">{data.length > 0 && 
+        
+        <Table
+          customColumn='Actions'
+          items={data}
+          headers={headers}
+          sortableColumns={sortableColumns}
+        >
+          {(item, index) => (
+            <>
+              <PencilSquareIcon
+                className='relative h-6 w-6'
+                onClick={() =>
+                  console.log(
+                    `PencilSquareIcon clicked for item ${index + 1}: ${
+                      item.id
+                    }`
+                  )
+                }
+              />
+              <TrashIcon
+                className='relative h-6 w-6'
+              />
+            </>
+          )}
+        </Table>}</div>
+        {totalItems > itemsPerPage && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={Math.ceil(totalItems / itemsPerPage)}
+          onPageChange={handlePageChange}
+        />
+)}
       </div>
     )
 }
-
 export default Patients;
