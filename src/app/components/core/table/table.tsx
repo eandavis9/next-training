@@ -30,7 +30,7 @@ const Table: React.FC<TableProps<any>> = ({
     // Set default sort column and order
     if (sortableColumns.length > 0) {
       setSortColumn(sortableColumns[0]);
-      setSortOrder('asc');
+      setSortOrder('desc');
     }
   }, []);
 
@@ -44,26 +44,45 @@ const Table: React.FC<TableProps<any>> = ({
       }
     }
   };
-
+  
   const sortedItems = sortColumn
-    ? items.sort((a, b) => {
-        const aValue = a[sortColumn];
-        const bValue = b[sortColumn];
-        if (aValue < bValue) {
-          return sortOrder === 'asc' ? -1 : 1;
-        }
-        if (aValue > bValue) {
-          return sortOrder === 'asc' ? 1 : -1;
-        }
-        return 0;
-      })
-    : items;
+  ? items.slice().sort((a, b) => {
+      const aValue = extractNumberFromString(a[sortColumn].toString());
+      const bValue = extractNumberFromString(b[sortColumn].toString());
+      
+      // console.log('aValue:', aValue);
+      // console.log('bValue:', bValue);
+      
+      // If both values are blank, consider them equal
+      if (aValue === '' && bValue === '') return 0;
+      
+      // If one value is blank, prioritize it to be at the top
+      if (aValue === '') return sortOrder === 'asc' ? -1 : 1;
+      if (bValue === '') return sortOrder === 'asc' ? 1 : -1;
+      
+      // If both values are non-numeric, compare them as strings
+      if (isNaN(aValue) && isNaN(bValue)) {
+        return sortOrder === 'asc'
+          ? a[sortColumn].toString().localeCompare(b[sortColumn].toString())
+          : b[sortColumn].toString().localeCompare(a[sortColumn].toString());
+      }
+      
+      // Otherwise, compare numeric values
+      return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
+    })
+  : [...items];
+
+  function extractNumberFromString(str) {
+    const numberRegex = /(\d+)/;
+    const matches = str.match(numberRegex);
+    return matches ? parseInt(matches[0]) : NaN;
+  }
 
   return (
-    <div className='overflow-x-auto overflow-y-hidden'>
+    <div className='overflow-x-auto rounded-lg border border-gray-150'>
       <table className='h-fit w-full border-collapse rounded-md bg-secondary-white shadow-md'>
         <thead>
-          <tr>
+          <tr className="text-gray-400">
             {headers.map((header, index) => (
               <th
                 key={index}
@@ -84,7 +103,7 @@ const Table: React.FC<TableProps<any>> = ({
             ))}
             {!!children && !!customColumn && (
               <th className='px-4 py-4 text-left text-base font-bold text-secondary-400'>
-                {customColumn}
+                 <span className='ml-1'>{customColumn}</span>
               </th>
             )}
           </tr>
@@ -95,7 +114,7 @@ const Table: React.FC<TableProps<any>> = ({
               {headers.map((key, keyIndex) => (
                 <td
                   key={keyIndex}
-                  className='border-b border-secondary-100 px-4 py-4 text-base'
+                  className={`border-b border-secondary-100 px-4 py-4 text-base ${keyIndex === 0 ? 'main-names' : ''}`}
                 >
                   {item[key]}
                 </td>
@@ -123,5 +142,5 @@ function camelCaseToWords(input: string): string {
   const capitalizedWords = words.map(
     (word) => word.charAt(0).toUpperCase() + word.slice(1)
   );
-  return capitalizedWords.join(' ');
+  return capitalizedWords.join(' ').toUpperCase();
 }

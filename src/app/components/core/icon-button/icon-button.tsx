@@ -49,7 +49,7 @@ const IconButton: React.FC<IconButtonProps> = ({
       <div className={iconButtonVariants({ intent, shape })}>
         <div className={iconButtonImageVariants({ intent })}>{children}</div>
         {props.dot && (
-          <div className='absolute left-[20px] top-[9px] h-1.5 w-1.5 rounded-full bg-danger' />
+          <div className='absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full' />
         )}
       </div>
     </div>

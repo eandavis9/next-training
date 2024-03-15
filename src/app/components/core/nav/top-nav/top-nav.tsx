@@ -16,19 +16,21 @@ interface TopNavProps extends VariantProps<typeof topNavVariants> {
 
 const TopNav: React.FC<TopNavProps> = ({ ...props }) => {
   return (
-    <nav className='duration-999 sticky top-0 flex h-20 items-center border-l border-secondary-50 bg-secondary-white p-6 transition ease-in-out'>
+    <nav className='duration-999 sticky top-0 flex h-20 items-center border-l border-secondary-50 bg-secondary-white px-10 transition ease-in-out'>
       {/* // TODO: Convert as breadcrumbs component
        */}
-      <div className='flex h-5 shrink grow basis-0 items-center justify-start gap-2.5 text-base font-bold text-secondary'>
+      <div className='flex h-5 shrink grow basis-0 items-center justify-start text-base font-bold text-secondary'>
         {props.page}
       </div>
 
-      <div className='flex h-10 items-center justify-end gap-4'>
-        <SearchBar></SearchBar>
+      <div className='flex h-10 items-center justify-end gap-3'>
+      <div className='flex items-center justify-center h-10 w-10 rounded-full border border-secondary-50 bg-gray-200'>
         <IconButton dot>
-          <BellIcon />
+          <BellIcon className='h-6 w-6 text-gray-500' style={{ fill: 'grey' }} />
         </IconButton>
-        <Avatar intent={'text'}></Avatar>
+      </div>
+        <div className='h-10 border-l border-secondary-50'></div>
+        <Avatar intent={'image'}></Avatar>
       </div>
     </nav>
   );

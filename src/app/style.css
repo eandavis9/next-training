@@ -1,42 +1,89 @@
 .custom-navbar-bg {
-    background-color: rgb(30, 86, 150); /* Your custom color */
+  background-color: #29557b;
+}
+
+.main-background {
+  background-color: #29557b;
+}
+
+.login-section {
+  height: 480px;
+  background-color: white;
+}
+
+.tagline {
+  text-align: left;
+  font-size: 70px;
+  font-weight: bold;
+  color: white;
+}
+.tagline > span {
+  font-size: 70px;
+  color: #fd7682;
+}
+.signup {
+  font-size: 30px;
+  color: #29557b;
+}
+
+.register label,
+.register button div {
+  font-size: 11px;
+}
+
+.register > button {
+  color: #29557b;
+}
+
+.main-names {
+  color:  #29557b;
+  font-weight: bold;
+}
+
+.sidebar-selected {
+  background-color: #244765;
+  opacity: 1;
 }
 
 .pagination {
-    list-style: none;
-    display: flex;
-    justify-content: flex-end;
-  }
-  
-  .pagination-item {
-    display: flex;
-  }
-  
-  .pagination-button {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    color: #333;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .pagination-button:hover {
-    background-color: #f0f0f0;
-  }
-  
-  .pagination-button.active {
-    background-color:#ff02029c;
-    color: #fff;
-  }
-  
-  .pagination-button.disabled {
-    pointer-events: none;
-    opacity: 0.5;
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pagination-item {
+  display: flex;
+}
+
+.pagination-button {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination-button:hover {
+  background-color: #f0f0f0;
+}
+
+.pagination-button.active {
+  background-color:#fd7682;
+  color: #fff;
+}
+
+.pagination-button.disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 .add-button {
-    background-color: #ff02029c;
+  background-color:#fd7682;
+}
+
+.bg-cancel {
+  background-color: grey;
 }
 
 .error-message {
@@ -49,10 +96,50 @@
 }
 
 .save-btn {
-  background-color:#ff02029c;
+  background-color:#fd7682;
   color: white;
 }
 
 .modal-container {
-  width: 678px;
+  width: 560px;
+}
+
+thead > tr,span {
+  font-size: 12px;
+}
+
+.select-wrapper select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('../../public/images/arrow-down-solid-3.svg');
+  background-repeat: no-repeat;
+  background-position: right 2px center;
+  padding-right: 20px;
+}
+
+.select-wrapper select::placeholder {
+  color: lightgray;
+}
+
+
+.date-input-wrapper {
+  background-image: url('../../public/images/arrow-down-solid-3.svg');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 20px;
+}
+
+
+.modal-button > button{
+  width: 135px;
+  height: 40px;
+}
+
+.search-export > button {
+  height: 37px;
+}
+
+.search-bar {
+  width: 370px;
 }

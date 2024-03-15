@@ -37,7 +37,7 @@ const SideNavLogo: React.FC<SideNavLogoProps> = ({
   );
 
   const labelBlock = (
-    <div className='text-neutral-700  text-sm font-bold'>Check Smile</div>
+    <div className='text-neutral-700  text-sm font-bold'></div>
   );
 
   return (

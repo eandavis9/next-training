@@ -9,7 +9,9 @@ import {
     PencilSquareIcon,
     Squares2X2Icon,
     UserIcon,
-    PlusIcon
+    PlusIcon,
+    CalendarDaysIcon,
+    UsersIcon
   } from '@heroicons/react/24/outline';
 
   export default function MainLayout({ children }: { children: React.ReactNode }) {
@@ -18,32 +20,32 @@ import {
             <SideNav
                 items={[
                 {
-                    label: 'Dashboard',
+                    label: 'DASHBOARD',
                     children: <Squares2X2Icon></Squares2X2Icon>,
                 },
                 {
-                    label: 'Patients',
+                    label: 'PATIENTS',
                     children: <UserIcon></UserIcon>,
                     selected: true,
                 },
                 {
-                    label: 'Calendar',
-                    children: <Cog6ToothIcon></Cog6ToothIcon>,
+                    label: 'CALENDAR',
+                    children: <CalendarDaysIcon></CalendarDaysIcon>,
                 },
                 {
-                    label: 'Dentists',
+                    label: 'DENTISTS',
                     children: <UserIcon></UserIcon>,
                 },
                 {
-                    label: 'Staff',
-                    children: <UserIcon></UserIcon>,
+                    label: 'STAFF',
+                    children: <UsersIcon></UsersIcon>,
                 },
                 {
-                    label: 'Settings',
+                    label: 'SETTINGS',
                     children: <Cog6ToothIcon></Cog6ToothIcon>,
                 },
                 ]}
-                logoPath={'images/img-logo-colored.svg'}
+                logoPath={'/images/logo.png'}
             />
             <div className='flex-1'>
                 <TopNav page={''} />

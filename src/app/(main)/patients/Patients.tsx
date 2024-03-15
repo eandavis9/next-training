@@ -8,6 +8,8 @@ import TopNav from '@/app/components/core/nav/top-nav/top-nav';
 import Table from '@/app/components/core/table/table';
 import TextArea from '@/app/components/core/textarea/textarea';
 import TextField from '@/app/components/core/textfield/textfield';
+import SelectField from '@/app/components/core/select/selectField';
+import Filter from '@/app/components/core/filters/Filter';
 import  Pagination from '@/app/components/core/main/pagination'
 import Modal from '@/app/components/core/main/modal';
 import {
@@ -16,6 +18,7 @@ import {
   PencilSquareIcon,
   TrashIcon,
   UserPlusIcon,
+  ArrowUpOnSquareIcon,
   PlusIcon
 } from '@heroicons/react/24/outline';
 import React, {useState, useEffect} from 'react';
@@ -37,21 +40,28 @@ const Patients: NextPage<Props> = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortBy] = useState("created_at");
+  const [sortBy] = useState("id");
   const [sortOrder] = useState("desc");
   const [totalItems, setTotalItems] = useState(0);
   const itemsPerPage = 5; // You can adjust this value according to your preference
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
   const headers = ['ID', 'patient_name', 'dentist_name', 'last_visit', 'last_service', 'contact_number'];
   const sortableColumns = ['ID', 'patient_name', 'last_visit', 'dentist_name', 'last_service', 'contact_number'];
+  const options1 = [
+    { value: 'option1a', label: 'Option 1A' },
+    { value: 'option1b', label: 'Option 1B' },
+  ];
+
+  const options2 = [
+    { value: 'option2a', label: 'Option 2A' },
+    { value: 'option2b', label: 'Option 2B' },
+  ];
 
   const handlePageChange = async (pageNumber) => {
-    setCurrentPage(pageNumber);
-    await getList()
-    
+    await setCurrentPage(pageNumber);
+    // await getList()
   };
 
   const handleOpenModal = () => {
@@ -78,7 +88,9 @@ const Patients: NextPage<Props> = () => {
         setValidationErrors(jsonResponse.errors);
         console.log(jsonResponse.errors)
       } else {
-        setData([jsonResponse.data, ...data]);
+        // setData([jsonResponse.data, ...data]);
+        await setCurrentPage(1);
+        await getList()
         setIsModalOpen(false);
       }
       
@@ -109,25 +121,26 @@ const Patients: NextPage<Props> = () => {
       setLoading(false);
     } catch (error) {
       console.error('Error fetching patient data:', error);
+      setLoading(false);
       // Handle error
     }
   };
 
    useEffect(()=>{
     getList();
-   }, []);
-   /* make this a table component */
+   },[currentPage]);
+   
     return(
       <div className='flex h-[calc(100vh-70px)] w-screen flex-col gap-11 overflow-y-auto bg-secondary-50 p-6 sm:w-full'>
         <div className='flex justify-between items-center gap-4'>
           <div className='flex items-center'>
-            <UserPlusIcon className='h-6 w-6 mr-2' />
-            <h1 className='text-xl font-semibold'>Patients</h1>
+            <UserPlusIcon className='h-7 w-7 mr-2 text-blue-400' style={{ fill: '#29557b' }}  />
+            <h1 className='text-xl font-semibold main-names'>Patients</h1>
           </div>
           <Button
             buttontype='button'
             intent='add'
-            label='Add Patient'
+            label='ADD NEW PATIENT'
             leftIcon
             size='md'
             onClick={handleOpenModal}
@@ -137,15 +150,18 @@ const Patients: NextPage<Props> = () => {
         </div>
         
       {/* filter fields */}
+      <Filter options={[options1, options2]} optionsPlaceholder={["Assigned Dentist", "Last Visit"]} />
+     
+     
       {isModalOpen && (
        <Modal onClose={handleCloseModal} title="Add Patient" >
-         <PatientFormModal onSubmit={handleSubmit} apiErrors={validationErrors} />
+         <PatientFormModal onSubmit={handleSubmit} onClose={handleCloseModal} apiErrors={validationErrors} />
        </Modal>
       )}
-      <div className="flex flex-col gap-y-4 rounded-lg border border-stroke bg-white p-3 shadow-default dark:border-strokedark dark:bg-boxdark sm:flex-row sm:items-center sm:justify-between">{data.length > 0 && 
+      {data.length > 0 && 
         
         <Table
-          customColumn='Actions'
+          customColumn='ACTIONS'
           items={data}
           headers={headers}
           sortableColumns={sortableColumns}
@@ -167,7 +183,7 @@ const Patients: NextPage<Props> = () => {
               />
             </>
           )}
-        </Table>}</div>
+        </Table>}
         {totalItems > itemsPerPage && (
         <Pagination
           currentPage={currentPage}

@@ -2,7 +2,7 @@ import { VariantProps, cva } from 'class-variance-authority';
 import React, { ReactNode } from 'react';
 
 const sideNavItemVariants = cva(
-  'inline-flex h-14 gap-4 rounded-md p-4 hover:bg-primary group text-white',
+  'inline-flex h-14 gap-4 rounded-md p-4 hover:bg-primary group text-white relative', 
   {
     variants: {
       collapsed: {
@@ -10,7 +10,7 @@ const sideNavItemVariants = cva(
         false: 'w-56',
       },
       selected: {
-        true: 'bg-primary',
+        true: 'sidebar-selected',
       },
       leftIcon: {
         true: 'items-center justify-start',
@@ -106,6 +106,7 @@ const SideNavItem: React.FC<SideNavItemProps> = ({
           >
             {props.label}
           </div>
+          {selected && <div className="absolute inset-y-0 right-0 w-1 bg-pink-500 r-lg"></div>} {/* Pink bar for selected item */}
           {props.rightIcon && iconBlock}
         </>
       )}

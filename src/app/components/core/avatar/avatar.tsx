@@ -47,13 +47,16 @@ const Avatar: React.FC<AvatarProps> = ({ intent, ...props }) => {
       </div>
       {!props.noLabel && (
         <div className='flex items-center gap-2'>
-          <p className='whitespace-nowrap text-base text-secondary'>
-            Dominik Tyka
-          </p>
-          <div className='h-4 w-4 origin-center'>
-            <ChevronDownIcon />
-          </div>
+        <div>
+          <b className='whitespace-nowrap text-base text-secondary main-names'>
+            Patricia Tusni
+          </b>
+          <p className='text-sm text-secondary'>Admin Staff</p>
         </div>
+        <div className='h-4 w-4 flex items-center justify-center'>
+          <ChevronDownIcon className='h-3 w-3' />
+        </div>
+      </div>
       )}
     </div>
   );

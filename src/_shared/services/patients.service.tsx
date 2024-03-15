@@ -32,7 +32,6 @@ export class PatientService implements IPatientService {
                 take: pageSize,
                 skip,
                 include: {
-                    // Include the patientDentistHistory relation with specific fields
                     histories: {
                         include: {
                             dentist: true,
@@ -80,7 +79,16 @@ export class PatientService implements IPatientService {
                 },
               });
 
-            return { success: !! result, data: result };
+              const createdPatient: PatientList = {
+                ID: `P-${result.id}`,
+                patient_name: `${result.first_name} ${result.last_name}`,
+                dentist_name: '',
+                last_visit: '',
+                last_service: '',
+                contact_number: result.contact_number,
+            };
+
+            return { success: !! result, data: createdPatient };
         } catch (error: any) {
             // TODO: Add error codes
             console.log(error)

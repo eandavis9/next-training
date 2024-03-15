@@ -9,14 +9,15 @@ import { getErrorMessageForField } from '@/_shared/helpers/validation.helper'; /
 import SelectField from '@/app/components/core/select/selectField';
 import Spinner from '@/app/components/core/spinner/spinner';
 import { GenderEnum, getGenderLabel } from '@/_shared/enums/GenderEnum';
+import DatePicker from '../../core/datepicker/datepicker';
 
 import * as Yup from 'yup';
 
-const PatientFormModal: React.FC<{ onSubmit: (values: any, helpers: any) => void, apiErrors: string[]  }> = ({ onSubmit, apiErrors }) => {
+const PatientFormModal: React.FC<{ onSubmit: (values: any, helpers: any) => void, apiErrors: string[], onClose: () => void  }> = ({ onSubmit, onClose, apiErrors }) => {
   const [isError, setIsError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const loginFormInitialValue = {
+  const patientFormInitialValue = {
     first_name: '',
     last_name: '',
     address: '',
@@ -55,7 +56,7 @@ const PatientFormModal: React.FC<{ onSubmit: (values: any, helpers: any) => void
   
        <div className="bg-white rounded-lg overflow-hidden transform transition-all max-w-3xl w-full patientModal">
             <Formik
-              initialValues={loginFormInitialValue}
+              initialValues={patientFormInitialValue}
               validationSchema={validationSchema}
               onSubmit={handleSubmit}
             >
@@ -76,6 +77,7 @@ const PatientFormModal: React.FC<{ onSubmit: (values: any, helpers: any) => void
                       <FormField
                         fieldtype='text'
                         name='first_name'
+                        fullWidth
                         onChange={handleChange}
                         placeholder='Enter first name...'
                         intent={touched.first_name || (errors.first_name || apiErrors.first_name) ? 'error' : 'default'}
@@ -92,7 +94,7 @@ const PatientFormModal: React.FC<{ onSubmit: (values: any, helpers: any) => void
                       <FormField
                         fieldtype='text'
                         name='last_name'
-                      
+                        fullWidth
                         onChange={handleChange}
                         placeholder='Enter last name...'
                         intent={touched?.last_name || (errors.last_name || apiErrors.last_name) ? 'error' : 'default'}
@@ -109,7 +111,7 @@ const PatientFormModal: React.FC<{ onSubmit: (values: any, helpers: any) => void
                   <FormField
                     fieldtype='text'
                     name='address'
-                  
+                    fullWidth
                     onChange={handleChange}
                     placeholder='Enter address...'
                     intent={touched?.address && (errors.address || apiErrors?.address) ? 'error' : 'default'}
@@ -125,7 +127,7 @@ const PatientFormModal: React.FC<{ onSubmit: (values: any, helpers: any) => void
                   <FormField
                     fieldtype='email'
                     name='email_address'
-                  
+                    fullWidth
                     onChange={handleChange}
                     placeholder='Enter email address...'
                     intent={touched?.email_address || (errors.email_address || apiErrors?.email_address) ? 'error' : 'default'}
@@ -146,6 +148,7 @@ const PatientFormModal: React.FC<{ onSubmit: (values: any, helpers: any) => void
                   <FormField
                     fieldtype='text'
                     name='contact_number'
+                    fullWidth
                     onChange={handleChange}
                     placeholder='Enter contact number...'
                     intent={touched.contact_number || (errors.contact_number || apiErrors.contact_number) ? 'error' : 'default'}
@@ -160,10 +163,12 @@ const PatientFormModal: React.FC<{ onSubmit: (values: any, helpers: any) => void
                     <FormLabel fontbold htmlFor='birthdate' intent='secondary'>
                       Birthdate
                     </FormLabel>
+                   
                     <FormField
                       fieldtype='date'
                       name='birthdate'
-
+                      fullWidth
+                      value=""
                       onChange={handleChange}
                       placeholder='Enter birthdate...'
                       intent={touched?.birthdate || (errors.birthdate || apiErrors?.birthdate) ? 'error' : 'default'}
@@ -178,6 +183,7 @@ const PatientFormModal: React.FC<{ onSubmit: (values: any, helpers: any) => void
                     <SelectField 
                       onChange={handleChange}
                       name='gender'
+                      fullWidth
                       value={values.gender}
                       intent={touched?.gender || (errors.gender || apiErrors?.gender) ? 'error' : 'default'}
                       errorMessage={errors.gender || getErrorMessageForField('gender', apiErrors)}
@@ -200,12 +206,12 @@ const PatientFormModal: React.FC<{ onSubmit: (values: any, helpers: any) => void
                 {isError && <div className='my-2 text-red-500'>Failed to submit patient data</div>}
 
                 {/* Submit Button */}
-                <div className="flex justify-between mt-4 ">
+                <div className="flex justify-between mt-4 modal-button">
                     <Button
                         buttontype='button'
-                        intent='primary'
+                        intent='cancel'
                         label='Cancel'
-                        size='lg'
+                        onClick={onClose}
                       />
                   {isSubmitting ? (
                       <Spinner nolabel={true} size="lg" />

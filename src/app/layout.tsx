@@ -10,7 +10,7 @@ import '@/app/style.css'
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Underscore',
+  title: 'Smiles Matter',
 };
 
 export default function RootLayout({
