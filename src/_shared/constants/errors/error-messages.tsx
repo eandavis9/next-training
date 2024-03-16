@@ -1,6 +1,6 @@
 export const ERRORS = {
     unexpectedError: "unexpected-error",
-    validationError: "validation-error",
+    validationError: "422",
   };
   
   export const ERROR_MESSAGES: Record<string, string> = {
