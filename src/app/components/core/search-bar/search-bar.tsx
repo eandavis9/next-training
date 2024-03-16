@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { VariantProps, cva } from 'class-variance-authority';
 import React, { ReactNode } from 'react';
 
-const searchBarParentVariants = cva('flex gap-2', {
+const searchBarParentVariants = cva('flex gap-2 search-bar', {
   variants: {
     fullWidth: {
       true: 'w-full',

@@ -6,6 +6,7 @@ const buttonVariants = cva('rounded-md flex justify-center items-center', {
   variants: {
     intent: {
       primary: 'bg-primary',
+      cancel: 'bg-cancel',
       secondary: 'border-primary border-solid border-2',
       link: '',
       add: 'add-button',
@@ -40,6 +41,7 @@ const buttonLabelVariants = cva('font-semibold', {
       primary: 'text-secondary-50',
       secondary: 'text-primary',
       link: 'text-primary',
+      cancel: 'text-white',
       add: 'text-white'
     },
     size: {

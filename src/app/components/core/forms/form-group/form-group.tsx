@@ -1,7 +1,7 @@
 import { VariantProps, cva } from 'class-variance-authority';
 import { ReactNode } from 'react';
 
-const formGroupVariants = cva('mb-6', {
+const formGroupVariants = cva('mb-4 flex-grow', {
   variants: {
     intent: {
       primary: '',

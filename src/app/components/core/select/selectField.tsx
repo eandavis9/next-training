@@ -1,7 +1,7 @@
 import React from 'react';
 import { cva } from 'class-variance-authority';
 
-const selectContainerVariants = cva('flex flex-col gap-1', {
+const selectContainerVariants = cva('flex flex-col gap-1 select-wrapper', {
   variants: {
     intent: {
       default: '',
