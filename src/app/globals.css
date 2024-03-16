@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    font-family: 'Nunito Sans', sans-serif;
+    src: url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200;0,6..12,300;0,6..12,400;0,6..12,500;0,6..12,600;0,6..12,700;0,6..12,800;0,6..12,900;0,6..12,1000;1,6..12,200;1,6..12,300;1,6..12,400;1,6..12,500;1,6..12,600;1,6..12,700;1,6..12,800;1,6..12,900;1,6..12,1000&display=swap');
+    font-size: 14px;
+  }
+
+  :root {
+    /* PRIMARY */
+    --colors-blue-100: 193deg 92% 68%;
+    --colors-blue-200: 193deg 100% 48%;
+    --colors-blue-300: 193deg 100% 38%;
+    --colors-blue-400: 193deg 100% 29%;
+    --colors-blue-500: 193deg 94% 88%;
+    --colors-blue-600: 193deg 94% 88%;
+
+    /* SECONDARY */
+    --colors-gray-100: 150deg 1% 70%;
+    --colors-gray-200: 140deg 1% 50%;
+    --colors-gray-300: 150deg 1% 40%;
+    --colors-gray-400: 150deg 1% 30%;
+    --colors-gray-500: 120deg 2% 90%;
+    --colors-gray-600: 0deg 0 26%;
+
+    /* ACCENTS */
+    /* Success */
+    --colors-green-100: 116deg 48% 72%;
+    --colors-green-200: 116deg 47% 54%;
+    --colors-green-300: 116deg 40% 43%;
+    --colors-green-400: 116deg 41% 32%;
+    --colors-green-50: 115deg 49% 91%;
+    /* Danger */
+    --colors-red-100: 0deg 92% 75%;
+    --colors-red-200: 0deg 92% 59%;
+    --colors-red-300: 0deg 65% 47%;
+    --colors-red-400: 0deg 66% 35%;
+    --colors-red-50: 0deg 91% 92%;
+    /* Warning */
+    --colors-yellow-100: 48deg 92% 75%;
+    --colors-yellow-200: 48deg 92% 59%;
+    --colors-yellow-300: 48deg 65% 47%;
+    --colors-yellow-400: 48deg 66% 35%;
+    --colors-yellow-50: 49deg 91% 92%;
+  }
+
+  /* dark mode variables */
+  :root[data-theme='dark'] {
+    --colors-blue-100: 193deg 92% 68%;
+    --colors-blue-200: 193deg 0% 48%;
+    --colors-blue-300: 193deg 100% 38%;
+    --colors-blue-400: 193deg 100% 29%;
+    --colors-blue-50: 193deg 94% 88%;
+    --colors-gray-100: 150deg 1% 70%;
+    --colors-gray-200: 140deg 1% 50%;
+    --colors-gray-300: 150deg 1% 40%;
+    --colors-gray-400: 150deg 1% 30%;
+    --colors-gray-50: 120deg 2% 90%;
+    --colors-gray-500: 0deg 0 26%;
+    --colors-green-100: 116deg 48% 72%;
+    --colors-green-200: 116deg 47% 54%;
+    --colors-green-300: 116deg 40% 43%;
+    --colors-green-400: 116deg 41% 32%;
+    --colors-green-50: 115deg 49% 91%;
+    --colors-red-100: 0deg 92% 75%;
+    --colors-red-200: 0deg 92% 59%;
+    --colors-red-300: 0deg 65% 47%;
+    --colors-red-400: 0deg 66% 35%;
+    --colors-red-50: 0deg 91% 92%;
+    --colors-yellow-100: 48deg 92% 75%;
+    --colors-yellow-200: 48deg 92% 59%;
+    --colors-yellow-300: 48deg 65% 47%;
+    --colors-yellow-400: 48deg 66% 35%;
+    --colors-yellow-50: 49deg 91% 92%;
+  }
+
+  /* dark mode variables */
+  :root[data-theme='yellow'] {
+    --colors-blue-100: 193deg 92% 68%;
+    --colors-blue-200: 193deg 0% 0%;
+    --colors-blue-300: 193deg 100% 38%;
+    --colors-blue-400: 193deg 100% 29%;
+    --colors-blue-50: 193deg 94% 88%;
+    --colors-gray-100: 150deg 1% 70%;
+    --colors-gray-200: 140deg 1% 50%;
+    --colors-gray-300: 150deg 1% 40%;
+    --colors-gray-400: 150deg 1% 30%;
+    --colors-gray-50: 120deg 2% 90%;
+    --colors-gray-500: 0deg 0 26%;
+    --colors-green-100: 116deg 48% 72%;
+    --colors-green-200: 116deg 47% 54%;
+    --colors-green-300: 116deg 40% 43%;
+    --colors-green-400: 116deg 41% 32%;
+    --colors-green-50: 115deg 49% 91%;
+    --colors-red-100: 0deg 92% 75%;
+    --colors-red-200: 0deg 92% 59%;
+    --colors-red-300: 0deg 65% 47%;
+    --colors-red-400: 0deg 66% 35%;
+    --colors-red-50: 0deg 91% 92%;
+    --colors-yellow-100: 48deg 92% 75%;
+    --colors-yellow-200: 48deg 92% 59%;
+    --colors-yellow-300: 48deg 65% 47%;
+    --colors-yellow-400: 48deg 66% 35%;
+    --colors-yellow-50: 49deg 91% 92%;
+  }
+}
