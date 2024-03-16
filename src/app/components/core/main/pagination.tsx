@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Pagination: React.FC<{
   currentPage: number;
@@ -11,19 +11,22 @@ const Pagination: React.FC<{
     <div className="flex justify-end mt-4">
       <nav>
         <ul className="pagination">
-          <li
-            className={`pagination-item ${
-              currentPage === 1 ? 'disabled' : ''
-            }`}
-            onClick={() => onPageChange(currentPage - 1)}
-          >
-            <button className="pagination-button">Previous</button>
+          <li className="pagination-item">
+            <button
+              onClick={() => onPageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className={`pagination-button ${
+                currentPage === 1 ? "disabled" : ""
+              }`}
+            >
+              Previous
+            </button>
           </li>
           {pages.map((page) => (
             <li key={page} className="pagination-item">
               <button
                 className={`pagination-button ${
-                  currentPage === page ? 'active' : ''
+                  currentPage === page ? "active" : ""
                 }`}
                 onClick={() => onPageChange(page)}
               >
@@ -31,13 +34,16 @@ const Pagination: React.FC<{
               </button>
             </li>
           ))}
-          <li
-            className={`pagination-item ${
-              currentPage === totalPages ? 'disabled' : ''
-            }`}
-            onClick={() => onPageChange(currentPage + 1)}
-          >
-            <button className="pagination-button">Next</button>
+          <li className="pagination-item">
+            <button
+              disabled={currentPage === totalPages}
+              onClick={() => onPageChange(currentPage + 1)}
+              className={`pagination-button ${
+                currentPage === totalPages ? "disabled" : ""
+              }`}
+            >
+              Next
+            </button>
           </li>
         </ul>
       </nav>

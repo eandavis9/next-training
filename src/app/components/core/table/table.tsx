@@ -32,7 +32,7 @@ const Table: React.FC<TableProps<any>> = ({
       setSortColumn(sortableColumns[0]);
       setSortOrder('desc');
     }
-  }, []);
+  }, [sortableColumns]);
 
   const handleSort = (column: string) => {
     if (sortableColumns.includes(column)) {

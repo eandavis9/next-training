@@ -40,6 +40,23 @@
   font-weight: bold;
 }
 
+.sidebar-item {
+ width: inherit;
+}
+
+.sidebar-item div {
+  color: #ffffff96;
+ }
+
+ .sidebar-selected div {
+  color: #fffffffd;
+}
+
+.sidebar-item:hover {
+  background-color: #244765;
+  opacity: 1;
+}
+
 .sidebar-selected {
   background-color: #244765;
   opacity: 1;
@@ -142,4 +159,8 @@ thead > tr,span {
 
 .search-bar {
   width: 370px;
+}
+
+.action-icons {
+  color:#7b7474e0;
 }

@@ -2,7 +2,7 @@ import { VariantProps, cva } from 'class-variance-authority';
 import React, { ReactNode } from 'react';
 
 const sideNavItemVariants = cva(
-  'inline-flex h-14 gap-4 rounded-md p-4 hover:bg-primary group text-white relative', 
+  'inline-flex h-14 gap-4 rounded-sm p-4 text-white relative sidebar-item', 
   {
     variants: {
       collapsed: {
