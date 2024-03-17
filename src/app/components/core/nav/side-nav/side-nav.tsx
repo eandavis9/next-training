@@ -1,6 +1,7 @@
 'use client';
 
 import { VariantProps, cva } from 'class-variance-authority';
+import { usePathname } from 'next/navigation'
 import React, { useState } from 'react';
 import SideNavLogo from './side-nav-logo/side-nav-logo';
 import SideNavItem, { SideNavItemProps } from './side-nav-item/side-nav-item';
@@ -63,6 +64,7 @@ const SideNav: React.FC<SideNavProps> = ({
 }) => {
   const [selectedItem, setSelectedItem] = useState(0);
 
+  const pathname = usePathname()
   const handleItemClick = (index: number) => {
     setSelectedItem(index);
   };
@@ -87,7 +89,7 @@ const SideNav: React.FC<SideNavProps> = ({
               </SideNavItem>
             ) : (
               <SideNavItem
-                selected={selectedItem === index}
+                selected={pathname === item.route}
                 label={item.label}
                 onClick={() => handleItemClick(index)}
                 leftIcon

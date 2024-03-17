@@ -66,6 +66,7 @@ const sideNavItemiconVariants = cva(
 
 interface SideNavItemProps extends VariantProps<typeof sideNavItemVariants> {
   label: string;
+  route: string;
   leftIcon?: boolean;
   rightIcon?: boolean;
   children?: ReactNode;

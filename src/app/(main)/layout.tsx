@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+
 import SideNav from '@/app/components/core/nav/side-nav/side-nav';
 import TopNav from '@/app/components/core/nav/top-nav/top-nav';
 import {
@@ -15,36 +15,46 @@ import {
   } from '@heroicons/react/24/outline';
 
   export default function MainLayout({ children }: { children: React.ReactNode }) {
+   
+    const sideNavItems = [
+        {
+            label: 'DASHBOARD',
+            route: '/',
+            children: <Squares2X2Icon />,
+        },
+        {
+            label: 'PATIENTS',
+            route: '/patients',
+            children: <UserIcon />,
+        },
+        {
+            label: 'CALENDAR',
+            route: '/calendar',
+            children: <CalendarDaysIcon />,
+        },
+        {
+            label: 'DENTISTS',
+            route: '/dentists',
+            children: <UserIcon />,
+        },
+        {
+            label: 'STAFF',
+            route: '/staff',
+            children: <UsersIcon />,
+        },
+        {
+            label: 'SETTINGS',
+            route: '/settings',
+            children: <Cog6ToothIcon />,
+        },
+    ];
+    
     return (
         <div className='min-height-screen relative flex'>
             <SideNav
-                items={[
-                {
-                    label: 'DASHBOARD',
-                    children: <Squares2X2Icon></Squares2X2Icon>,
-                },
-                {
-                    label: 'PATIENTS',
-                    children: <UserIcon></UserIcon>,
-                    selected: true,
-                },
-                {
-                    label: 'CALENDAR',
-                    children: <CalendarDaysIcon></CalendarDaysIcon>,
-                },
-                {
-                    label: 'DENTISTS',
-                    children: <UserIcon></UserIcon>,
-                },
-                {
-                    label: 'STAFF',
-                    children: <UsersIcon></UsersIcon>,
-                },
-                {
-                    label: 'SETTINGS',
-                    children: <Cog6ToothIcon></Cog6ToothIcon>,
-                },
-                ]}
+                items={sideNavItems.map(item => ({
+                    ...item,
+                }))}
                 logoPath={'/images/logo.png'}
             />
             <div className='flex-1'>

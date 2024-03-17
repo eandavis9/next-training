@@ -129,7 +129,6 @@ const Login: NextPage<Props> = () => {
                       <FormGroup intent="primary">
                         <Button
                           fullWidth
-                          isLoading={isLoading}
                           buttontype="submit"
                           intent="add"
                           label="SIGN IN"
@@ -144,7 +143,6 @@ const Login: NextPage<Props> = () => {
                           intent="link"
                           label="Register here"
                           size="md"
-                          onClick={() => navigateToSignUp()}
                         />
                       </div>
                     </Form>
