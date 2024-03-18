@@ -7,6 +7,7 @@ import { PatientList } from "../models/patients/patient-list-model";
 import { CreateRequestSchema } from "@/_shared/constants/validations/schemas/patient-schema";
 import { z } from "zod";
 import { injectable } from "inversify";
+import { generateRandomWords, generateRandomDate } from "../utils/randomStr";
 import moment from "moment";
 import "reflect-metadata";
 
@@ -50,18 +51,18 @@ export class PatientService implements IPatientService {
           patient_name: `${patient.first_name} ${patient.last_name}`,
           dentist_name: dentist
             ? `${dentist.first_name} ${dentist.last_name}`
-            : "",
+            : generateRandomWords(2),
           last_visit: recentVisit
-            ? moment(recentVisit.visit_date).format("YYYY-MM-DD")
-            : "",
-          last_service: recentVisit ? recentVisit.service_name : "",
+            ? moment(recentVisit.visit_date).format("MMM D YYYY")
+            : generateRandomDate(100),
+          last_service: recentVisit ? recentVisit.service_name : generateRandomWords(2),
           contact_number: patient.contact_number,
         };
       });
       return { success: true, data: list, totalCount: totalPatientsCount };
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      return { errorCode: ERRORS.unexpectedError, success: false };
+      return { errorCode: ERRORS.unexpectedError, success: false, status: 500};
     }
   }
   async createPatient(request: CreateRequest): Promise<any> {
@@ -89,7 +90,7 @@ export class PatientService implements IPatientService {
         contact_number: result.contact_number,
       };
 
-      return { success: !!result, data: createdPatient };
+      return { success: !!result, data: createdPatient, status: 201 };
     } catch (error: any) {
       // TODO: Add error codes
       console.log(error);
@@ -106,11 +107,12 @@ export class PatientService implements IPatientService {
           success: false,
           errorCode: ERRORS.validationError,
           errors: validationErrors,
+          status: 422
         };
       } else {
         // Handle unexpected errors
         console.error("Error creating patient:", error);
-        return { success: false, errorCode: ERRORS.unexpectedError };
+        return { success: false, errorCode: ERRORS.unexpectedError, status: 500 };
       }
     }
   }

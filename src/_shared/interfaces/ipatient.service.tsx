@@ -4,5 +4,5 @@ import { PatientQueryOptions } from "../models/filters/patient-filter-model";
 
 export interface IPatientService {
     getPatients(request: PatientQueryOptions): Promise<any>;
-    createPatient(request: CreateRequest): Promise<Response<void>>;
+    createPatient(request: CreateRequest): Promise<any>;
 }

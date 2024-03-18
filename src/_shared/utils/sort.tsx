@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const extractNumberFromString = (str: string) => {
     const numberRegex = /(\d+)/;
     const matches = str.match(numberRegex);
@@ -7,8 +9,17 @@ export const extractNumberFromString = (str: string) => {
 export const sortItemsByColumn = (items: any, sortColumn: any, sortOrder: any) => {
     return sortColumn
         ?   items.slice().sort((a, b) => {
-              const aValue = extractNumberFromString(a[sortColumn].toString());
-              const bValue = extractNumberFromString(b[sortColumn].toString());
+                let aValue;
+                let bValue;
+
+                // Handle sorting by date
+                if (moment.isMoment(a[sortColumn]) && moment.isMoment(b[sortColumn])) {
+                    aValue = a[sortColumn];
+                    bValue = b[sortColumn];
+                } else {
+                    aValue = extractNumberFromString(String(a[sortColumn]));
+                    bValue = extractNumberFromString(String(b[sortColumn]));
+                }
 
               // If both values are blank, consider them equal
               if (aValue === '' && bValue === '') return 0;

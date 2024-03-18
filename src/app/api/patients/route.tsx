@@ -19,7 +19,8 @@ export async function GET(request: NextRequest): Promise<any> {
   const options = { sortBy, sortOrder, page, pageSize };
 
   const result = await patientService.getPatients(options);
-  return NextResponse.json(result);
+  
+  return NextResponse.json(result, { status: result.status });
 }
 
 export async function POST(request: Request) {
@@ -27,5 +28,5 @@ export async function POST(request: Request) {
 
   const result = await patientService.createPatient(body);
 
-  return NextResponse.json(result);
+  return NextResponse.json(result, { status: result.status });
 }

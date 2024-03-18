@@ -1,8 +1,8 @@
 export const fetchPatients = async ({
-  sortBy = "created_at",
-  sortOrder = "desc",
+  sortBy = "first_name",
+  sortOrder = "asc",
   page = 1,
-  pageSize = 10,
+  pageSize = 5,
 } = {}) => {
   const params = new URLSearchParams({
     sortBy,
@@ -13,7 +13,7 @@ export const fetchPatients = async ({
   const url = `/api/patients?${params.toString()}`;
 
   const response = await fetch(url);
-
+  
   return response;
 };
 
@@ -25,6 +25,6 @@ export const addPatient = async (patientData: any) => {
     },
     body: JSON.stringify(patientData),
   });
-
+  
   return response;
 };

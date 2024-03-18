@@ -31,7 +31,7 @@ const Table: React.FC<TableProps<any>> = ({
     // Set default sort column and order
     if (sortableColumns.length > 0) {
       setSortColumn(sortableColumns[0]);
-      setSortOrder('desc');
+      setSortOrder('asc');
     }
   }, [sortableColumns]);
 

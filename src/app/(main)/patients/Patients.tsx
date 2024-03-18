@@ -8,7 +8,7 @@ import Modal from "@/app/components/core/main/modal";
 import Alert from "@/app/components/core/alert/alert";
 import { fetchPatients, addPatient } from "@/app/api/index";
 import { ERROR_MESSAGES } from "@/_shared/constants/errors/error-messages";
-
+import { sortItemsByColumn } from '@/_shared/utils/sort'
 import {
   PencilSquareIcon,
   TrashIcon,
@@ -53,8 +53,8 @@ const Patients: NextPage<Props> = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortBy] = useState("id");
-  const [sortOrder] = useState("desc");
+  const [sortBy] = useState("first_name");
+  const [sortOrder] = useState("asc");
   const [totalItems, setTotalItems] = useState(0);
   const itemsPerPage = 5; // You can adjust this value according to your preference
 
@@ -69,8 +69,8 @@ const Patients: NextPage<Props> = () => {
     "contact_number",
   ];
   const sortableColumns = [
-    "ID",
     "patient_name",
+    "ID",
     "last_visit",
     "dentist_name",
     "last_service",
@@ -112,9 +112,9 @@ const Patients: NextPage<Props> = () => {
         setValidationErrors(jsonResponse.errors);
         console.log(jsonResponse.errors);
       } else {
-        // setData([jsonResponse.data, ...data]);
         await setCurrentPage(1);
-        await getList();
+        setData([jsonResponse.data, ...data]);
+       //await getList();
         setIsModalOpen(false);
       }
     } catch (error: any) {
@@ -136,14 +136,14 @@ const Patients: NextPage<Props> = () => {
 
       const json = await response.json();
 
-      if (!json.success) {
+      if (!json.success || response.status === 500) {
         showAlert("error", ERROR_MESSAGES[json?.errorCode]);
       }
 
       setData(json?.data);
       setTotalItems(json?.totalCount);
     } catch (error: any) {
-      // console.log(error)
+      console.log(error)
       showAlert("error", ERROR_MESSAGES[error?.errorCode]);
     } finally {
       setLoading(false);
