@@ -53,7 +53,7 @@ const sideNavLogoContainerVariants = cva(
 
 interface SideNavProps extends VariantProps<typeof sideNavVariants> {
   items: SideNavItemProps[];
-  logoPath: string;
+  logoPath?: string;
 }
 
 const SideNav: React.FC<SideNavProps> = ({
@@ -80,6 +80,7 @@ const SideNav: React.FC<SideNavProps> = ({
           <div className='flex w-full justify-center' key={index}>
             {collapsed ? (
               <SideNavItem
+                route={item.route}
                 selected={selectedItem === index}
                 label={item.label}
                 onClick={() => handleItemClick(index)}
@@ -89,6 +90,7 @@ const SideNav: React.FC<SideNavProps> = ({
               </SideNavItem>
             ) : (
               <SideNavItem
+                route={item.route}
                 selected={pathname === item.route}
                 label={item.label}
                 onClick={() => handleItemClick(index)}

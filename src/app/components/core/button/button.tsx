@@ -49,7 +49,7 @@ const buttonLabelVariants = cva('font-semibold', {
       md: 'text-base',
       sm: 'text-sm',
     },
-    leftIcon: {
+    lefticon: {
       true: 'flex justify-start',
     },
     rightIcon: {
@@ -94,7 +94,7 @@ interface ButtonProps extends VariantProps<typeof buttonVariants> {
   label: string;
   buttontype: 'button' | 'submit';
   children?: ReactNode;
-  leftIcon?: boolean;
+  lefticon?: boolean;
   rightIcon?: boolean;
   isLoading?: boolean;
   onClick?: () => void;
@@ -129,7 +129,7 @@ const Button: React.FC<ButtonProps> = ({
       }}
       aria-label='button'
     >
-      {props.leftIcon && !isLoading && !!children && (
+      {props.lefticon && !isLoading && !!children && (
         <div className={buttonIconVariants({ intent, size })}>{children}</div>
       )}
 
@@ -139,8 +139,8 @@ const Button: React.FC<ButtonProps> = ({
         className={buttonLabelVariants({
           intent,
           size,
-          leftIcon: props.leftIcon,
-          rightIcon: props.leftIcon,
+          lefticon: props.lefticon,
+          rightIcon: props.lefticon,
         })}
       >
         {props.label}

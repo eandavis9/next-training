@@ -8,15 +8,23 @@ import { getErrorMessageForField } from "@/_shared/helpers/validation.helper"; /
 import SelectField from "@/app/components/core/select/selectField";
 import Spinner from "@/app/components/core/spinner/spinner";
 import { GenderEnum, getGenderLabel } from "@/_shared/enums/GenderEnum";
-import DatePicker from "../../core/datepicker/datepicker";
+import { VariantProps, cva } from 'class-variance-authority';
 
 import * as Yup from "yup";
 
-const PatientFormModal: React.FC<{
+const patientFormVariants = cva('bg-white rounded-lg overflow-hidden transform transition-all max-w-3xl w-full patientModal', {
+  variants: {},
+  defaultVariants: {},
+});
+
+interface PatientFormModalProps extends VariantProps<typeof patientFormVariants> {
   onSubmit: (values: any, helpers: any) => void;
   apiErrors: string[];
   onClose: () => void;
-}> = ({ onSubmit, onClose, apiErrors }) => {
+}
+
+const PatientFormModal: React.FC<PatientFormModalProps> = ({ onSubmit, onClose, apiErrors, ...props }) => {
+
   const [isError, setIsError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -57,7 +65,7 @@ const PatientFormModal: React.FC<{
   };
 
   return (
-    <div className="bg-white rounded-lg overflow-hidden transform transition-all max-w-3xl w-full patientModal">
+    <div className={patientFormVariants({})}>
       <Formik
         initialValues={patientFormInitialValue}
         validationSchema={validationSchema}
@@ -297,20 +305,17 @@ const PatientFormModal: React.FC<{
                 label="Cancel"
                 onClick={onClose}
               />
-              {isSubmitting ? (
-                <Spinner nolabel={true} size="lg" />
-              ) : (
-                <Button
+              <Button
                   buttontype="submit"
                   intent="add"
                   label="Save Details"
+                  isLoading={isSubmitting}
                   size="lg"
                   disabled={
                     isSubmitting ||
                     Object.keys(values).some((key) => !values[key])
                   }
                 />
-              )}
             </div>
           </Form>
         )}

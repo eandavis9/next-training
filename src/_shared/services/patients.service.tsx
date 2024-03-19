@@ -92,7 +92,6 @@ export class PatientService implements IPatientService {
 
       return { success: !!result, data: createdPatient, status: 201 };
     } catch (error: any) {
-      // TODO: Add error codes
       console.log(error);
       if (error instanceof z.ZodError) {
         // Handle validation errors
@@ -105,7 +104,7 @@ export class PatientService implements IPatientService {
 
         return {
           success: false,
-          errorCode: ERRORS.validationError,
+          errorCode: ERRORS.unexpectedError,
           errors: validationErrors,
           status: 422
         };

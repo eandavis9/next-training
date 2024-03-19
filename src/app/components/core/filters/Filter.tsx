@@ -4,6 +4,7 @@ import { ArrowUpOnSquareIcon } from '@heroicons/react/24/outline';
 import SearchBar from '../search-bar/search-bar';
 import Button from '../button/button';
 import SelectField from '../select/selectField';
+import { LeftIcon } from '../search-bar/search-bar.stories';
 
 interface Option {
   id?: Number,
@@ -42,7 +43,7 @@ const Filter: React.FC<Props> = ({ options, optionsPlaceholder, onSearch, onExpo
             <div className="mr-4">
               <SearchBar fullWidth leftIcon={true} label='' value='Search' onChange={onSearch} />
             </div>
-            <Button buttontype='button' label='Export'  intent='secondary' size='md' leftIcon> 
+            <Button buttontype='button' label='Export'  intent='secondary' size='md' lefticon={`${true}`} > 
                 <ArrowUpOnSquareIcon className="w-5 h-5 mr-1" /> 
             </Button>
           

@@ -56,7 +56,7 @@ const Patients: NextPage<Props> = () => {
   const [sortBy] = useState("first_name");
   const [sortOrder] = useState("asc");
   const [totalItems, setTotalItems] = useState(0);
-  const itemsPerPage = 5; // You can adjust this value according to your preference
+  const itemsPerPage = 5;
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -97,6 +97,10 @@ const Patients: NextPage<Props> = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleSearch = () => {
+    // handle search here
   };
 
   const handleSubmit = async (values: any) => {
@@ -168,7 +172,8 @@ const Patients: NextPage<Props> = () => {
           buttontype="button"
           intent="add"
           label="ADD NEW PATIENT"
-          leftIcon
+          isLoading={loading}
+          lefticon={`${true}`} 
           size="md"
           onClick={handleOpenModal}
         >
@@ -179,6 +184,7 @@ const Patients: NextPage<Props> = () => {
       {/* filter fields */}
       <Filter
         options={[options1, options2]}
+        onSearch={handleSearch}
         optionsPlaceholder={["Assigned Dentist", "Last Visit"]}
       />
 
@@ -196,10 +202,11 @@ const Patients: NextPage<Props> = () => {
           {alertMessage}
         </Alert>
       </div>
-      {data.length > 0 && (
+      {data.length > 0 && !isError && (
         <Table
           customColumn="ACTIONS"
           items={data}
+          isLoading={loading}
           headers={headers}
           sortableColumns={sortableColumns}
         >
